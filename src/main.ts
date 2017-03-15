@@ -88,7 +88,7 @@ request.get(url, function(error, response, body) {
     let y = currentPosition.y
 
     Map.getEnemies(map).forEach((enemy) => {
-      if (Map.canShoot(x, 7, enemy.pos.x, enemy.pos.y)) {
+      if (Map.canShoot(x, y, enemy.pos.x, enemy.pos.y)) {
         shoot(enemy.pos.x, enemy.pos.y)
       }
     })
