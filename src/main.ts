@@ -1,17 +1,12 @@
-// Below is an example of using TSLint errors suppression
+'use strict';
 
-/**
- * Returns a Promise<string> that resolves after given time.
- *
- * @param {string} name - Somebody's name
- * @param {number=} [delay=2000] - Number of milliseconds to delay resolution.
- * @returns {Promise<string>}
- */
-function delayedHello(name: string, delay: number = 2000): Promise<string> {
-  // tslint:disable-next-line no-string-based-set-timeout
-  return new Promise((resolve) => setTimeout(resolve(`Hello, ${name}`), delay));
-}
+let request = require('request')
 
-export default async function greeter(name) { // tslint:disable-line
-  return await delayedHello(name);
-}
+setInterval(() => {
+  // request('http://52.90.90.73/8h35nwk8/shoot/0,1', function (error, response, body) {
+  request('https://jsonplaceholder.typicode.com/posts/1', function (error, response, body) {
+    console.log('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+    console.log('body:', body); // Print the HTML for the Google homepage.
+  })
+}, 1000)
