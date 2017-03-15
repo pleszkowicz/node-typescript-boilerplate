@@ -23,10 +23,12 @@ let map = [
     "###################################################################Z"
 ]
 
+const ALLIES = 'JMMSTZ'
+const ENEMIES = 'abokmj'
+
 module.exports.map = map
 
 module.exports.getEnemies = function(map) {
-    let enemies = ['A', 'B', 'O', 'K', 'M', 'J']
     let enemiesPositions = []
     //console.log(map)
 
@@ -35,7 +37,7 @@ module.exports.getEnemies = function(map) {
         // enemies.indexOf(row)
         for (let col=0; col <= map[row].length; col++) {
             // console.log(map[row][col])
-            if (enemies.indexOf(map[row][col]) !== -1) [
+            if (ENEMIES.indexOf(map[row][col]) !== -1) [
                 enemiesPositions.push({
                     player: map[row][col],
                     pos: {
@@ -51,7 +53,9 @@ module.exports.getEnemies = function(map) {
 }
 
 module.exports.canMoveTo = function(map, col, row) {
-    return (map && map[row].charAt(col) !== '#') ? true : false
+    let target = map[row].charAt(col)
+
+    return map && target !== '#' && ALLIES.indexOf(target) === -1
 }
 
 module.exports.canShoot = function(x0, y0, x1, y1) {

@@ -10,10 +10,10 @@ let currentPosition = {};
 let map = [];
 let allies = [];
 let enemies = [];
+let isRespawned = true
 
-function updateGlobalInfo(body) {
+function updateGlobalInfo(error, response, body) {
   let resp = JSON.parse(body)
-  console.log(body)
   map = resp.map
   currentPosition = resp.self.position
   allies = resp.allies
@@ -22,27 +22,56 @@ function updateGlobalInfo(body) {
 
 function move(x, y) {
   request(`${url}/move/${x},${y}`, function (error, response, body) {
-    updateGlobalInfo(body)
+    updateGlobalInfo(error, response, body)
   })
 }
 
 function shoot(x, y) {
   request(`${url}/shoot/${x},${y}`, function (error, response, body) {
-    updateGlobalInfo(body)
+    console.log('a: ', error, response, body)
+    updateGlobalInfo(error, response, body)
   })
 
 }
 
 function shield(x, y) {
   request(`${url}/shield/${x},${y}`, function (error, response, body) {
-    updateGlobalInfo(body)
+    updateGlobalInfo(error, response, body)
   })
 }
 
 function shield2(x1, y1, x2, y2 ) {
   request(`${url}/shield/${x1},${y1};${x2},${y2}`, function (error, response, body) {
-    updateGlobalInfo(body)
+    updateGlobalInfo(error, response, body)
   })
+}
+
+function moveDown(x, y) {
+  move(x, y +1)
+}
+
+function moveLeft(x, y) {
+  move(x-1, y)
+}
+
+function moveRight(x, y) {
+  move(x+1, y)
+}
+
+function moveTop(x, y) {
+  move(x, y-1)
+}
+
+function moveTopRight(x, y) {
+    move(x+1, y-1)
+}
+
+function moveDownLeft(x, y) {
+    move(x-1, y+1)
+}
+
+function moveDownRight(x, y) {
+    move(x+1, y+1)
 }
 
 function getRandomInt(min, max) {
@@ -50,48 +79,48 @@ function getRandomInt(min, max) {
 }
 
 request.get(url, function(error, response, body) {
-  console.log('error: ', error);
   let resp = JSON.parse(body);
   currentPosition = resp.self.position
   map = resp.map
 
   setInterval(() => {
-    // Map.getEnemies(map).forEach((enemy) => {
-    //   if (Map.canShoot(51, 7, enemy.pos.x, enemy.pos.y)) {
-    //     shoot(enemy.pos.x, enemy.pos.y)
-    //   }
-    // })
+    Map.getEnemies(map).forEach((enemy) => {
+      if (Map.canShoot(51, 7, enemy.pos.x, enemy.pos.y)) {
+        shoot(enemy.pos.x, enemy.pos.y)
+      }
+    })
+
+    let x = currentPosition.x
+    let y = currentPosition.y
 
     console.log(map, currentPosition)
+    console.log('x:', x, 'y: ', y)
 
     //if in the base - top right corner
-    if (currentPosition['x'] >= 57
-        && currentPosition['x'] <= 66
-        && currentPosition['y'] >= 1
-        && currentPosition['y'] <= 4) {
-            if (Map.canMoveTo(map, currentPosition['x'] + 1, currentPosition['y'] + 1)) {
-                move(currentPosition['x'] + 1, currentPosition['y'] + 1)
-            } else if (Map.canMoveTo(map, currentPosition['x'] + 1, currentPosition['y'])) {
-                move(currentPosition['x'] + 1, currentPosition['y'])
-            } else if (Map.canMoveTo(map, currentPosition['x'], currentPosition['y'] + 1)) {
-                move(currentPosition['x'], currentPosition['y'] + 1)
+    //   moveTopRight(x, y)
+    if (x >= 57
+        && x <= 66
+        && y >= 1
+        && y <= 4) {
+            if (Map.canMoveTo(map, x + 1, y + 1)) {
+                console.log(1)
+                moveDownRight(x, y)
+            } else if (Map.canMoveTo(map, x + 1, y)) {
+                console.log('ss')
+                moveRight(x, y)
+            } else if (Map.canMoveTo(map, x, y + 1)) {
+                console.log(3)
+                moveDown(x, y)
             }
-    } /*else if (currentPosition['y'] < 8) { // outside of the base camp - go always to the y=8
-        move(currentPosition['x'], currentPosition['y'] + 1)
-    } else if (currentPosition['x'] >= 57 || currentPosition['x'] <= 66) { // outside of the base camp - go always to the x=57
-        move(currentPosition['x'] - 1, currentPosition['y'])
-    }*/
-    //now always go to the left bottom corner
-
-    if (Map.canMoveTo(map, currentPosition['x'] - 1, currentPosition['y'])) {
-        move(currentPosition['x'] - 1, currentPosition['y'])
-    } else if (Map.canMoveTo(map, currentPosition['x'] - 1, currentPosition['y'] + 1)) {
-        move(currentPosition['x'] - 1, currentPosition['y'] + 1)
-    } else if (Map.canMoveTo(map, currentPosition['x'], currentPosition['y'] + 1)) {
-        move(currentPosition['x'], currentPosition['y'] + 1)
+    } else if (Map.canMoveTo(map, x - 1, y)) {
+        moveLeft(x, y)
+    }
+    else if (Map.canMoveTo(map, x - 1, y + 1)) {
+        moveDownLeft(x, y)
+    } else if (Map.canMoveTo(map, x, y + 1)) {
+        moveDown(x, y)
     }
 
-    }
 
     // shoot(1,2)
   }, 3000)
