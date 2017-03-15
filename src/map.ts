@@ -25,9 +25,10 @@ let map = [
 
 module.exports.map = map
 
-module.exports.getEnemies = function() {
+module.exports.getEnemies = function(map) {
     let enemies = ['A', 'B', 'O', 'K', 'M', 'J']
     let enemiesPositions = []
+    console.log(map)
 
     for (let row=0; row < map.length; row++) {
 
@@ -49,8 +50,8 @@ module.exports.getEnemies = function() {
     return enemiesPositions
 }
 
-module.exports.canMoveTo = function(x, y) {
-    return map[x][y] !== '#'
+module.exports.canMoveTo = function(col, row) {
+    return map[col][row] !== '#'
 }
 
 module.exports.canShoot = function(x0, y0, x1, y1) {
