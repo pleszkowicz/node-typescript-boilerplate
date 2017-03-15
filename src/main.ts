@@ -1,6 +1,8 @@
 'use strict';
 
 let request = require('request')
+// import map from 'map'
+let Map = require('./map')
 // const url = 'http://52.90.90.73/'
 const url = 'http://weathered-rain-1953.getsandbox.com/move'
 
@@ -27,6 +29,10 @@ function shield(x, y) {
 function shield2(x1, y1, x2, y2 ) {
   request(`${url}/shield/${x1},${y1};${x2},${y2}`, function (error, response, body) {})
 }
+
+console.log(Map.map)
+
+console.log(Map.getEnemies(Map.map))
 
 setInterval(() => {
   move(1,2)
