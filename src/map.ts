@@ -23,8 +23,8 @@ let map = [
     "###################################################################Z"
 ]
 
-const ALLIES = 'JMMSTZ'
-const ENEMIES = 'abokmj'
+const ALLIES = 'kmpstz'
+const ENEMIES = 'ABOKMJ'
 
 module.exports.map = map
 
