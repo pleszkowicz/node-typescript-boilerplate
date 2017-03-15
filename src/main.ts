@@ -32,9 +32,15 @@ function shield2(x1, y1, x2, y2 ) {
 
 console.log(Map.map)
 
-console.log(Map.getEnemies(Map.map))
+// console.log(Map.getEnemies())
+
+Map.getEnemies().forEach((enemy) => {
+  if (Map.canShoot(5, 15, enemy.pos.x, enemy.pos.y)) {
+    console.log(enemy)
+  }
+})
 
 setInterval(() => {
-  move(1,2)
-  shoot(1,2)
+  // move(1,2)
+  // shoot(1,2)
 }, 1000)
