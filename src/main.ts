@@ -4,7 +4,7 @@ let request = require('request')
 // import map from 'map'
 let Map = require('./map')
 // const url = 'http://52.90.90.73/'
-const url = 'http://192.168.1.148:50000/37hxuef1'
+const url = 'http://192.168.1.148:50000/8h35nwk8'
 
 let currentPosition = {};
 let map = [];
@@ -84,14 +84,16 @@ request.get(url, function(error, response, body) {
   map = resp.map
 
   setInterval(() => {
+    let x = currentPosition.x
+    let y = currentPosition.y
+
     Map.getEnemies(map).forEach((enemy) => {
-      if (Map.canShoot(51, 7, enemy.pos.x, enemy.pos.y)) {
+      if (Map.canShoot(x, 7, enemy.pos.x, enemy.pos.y)) {
         shoot(enemy.pos.x, enemy.pos.y)
       }
     })
 
-    let x = currentPosition.x
-    let y = currentPosition.y
+
 
     console.log(map, currentPosition)
     console.log('x:', x, 'y: ', y)
