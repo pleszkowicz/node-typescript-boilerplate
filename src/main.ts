@@ -49,19 +49,7 @@ request.get(url, function(error, response, body) {
   let resp = JSON.parse(body);
   currentPosition = resp.self.position
   map = resp.map
-  //
-  // console.log('map: ', map)
-  console.log('x: ', currentPosition['x'])
-  console.log('y: ', currentPosition['y'])
-  // // console.log(map[currentPosition['x']].charAt(currentPosition['x']))
-  // console.log(map[0].charAt(0))
 
-  console.log(map[currentPosition['x'] + 1][currentPosition['y'] - 1)])
-
-  if (Map.canMoveTo(currentPosition['x'] + 1, currentPosition['y'] - 1)) {
-
-    console.log('sciana')
-  }
   setInterval(() => {
     Map.getEnemies(map).forEach((enemy) => {
       if (Map.canShoot(51, 7, enemy.pos.x, enemy.pos.y)) {
@@ -69,8 +57,8 @@ request.get(url, function(error, response, body) {
       }
     })
 
-    if (Map.canMoveTo(currentPosition['x'] + 1, currentPosition['y'] + 1)) {
-      // move(currentPosition['x'] + 1, currentPosition['y'] + 1)
+    if (Map.canMoveTo(map, currentPosition['x'] + 1, currentPosition['y'] - 1)) {
+      console.log('yes')
     }
 
 

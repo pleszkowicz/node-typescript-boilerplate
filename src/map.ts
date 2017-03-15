@@ -50,8 +50,8 @@ module.exports.getEnemies = function(map) {
     return enemiesPositions
 }
 
-module.exports.canMoveTo = function(col, row) {
-    return map[col][row] !== '#'
+module.exports.canMoveTo = function(map, col, row) {
+    return map[row].charAt(col) !== '#'
 }
 
 module.exports.canShoot = function(x0, y0, x1, y1) {
